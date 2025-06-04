@@ -5,10 +5,9 @@ module alu(
     input [31:0] A , B, //input
     input [3:0] S, //select
     output reg [31:0] F, //output
-    output zeroflag
+    output reg zeroflag
 );
 
-zeroflag = (F == 32'b0); //if result is zero
 
 always @(*) begin
     case(S)
