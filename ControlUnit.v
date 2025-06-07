@@ -1,7 +1,8 @@
 module CV(
     input [6:0] opcode, //7 bits opcode risc32
-    input func3 [3:0],
-    input alu_sel [3:0],
+    input [2:0] func3 ,
+    input [6:0] func7,
+    output reg [3:0] alu_sel,
     output reg reg_write, 
     output reg mem_read,
     output reg mem_write,
@@ -61,16 +62,16 @@ always @(*) begin
          7'b0000011: begin // Load (e.g., LW)
             reg_write = 1;
             mem_read = 1;
-            alu_control = 4'b0000; // ADD for address calculation
+            alu_sel = 4'b0000; // ADD for address calculation
             mem_to_reg = 1; // Data comes from memory
         end
         7'b0100011: begin // Store (e.g., SW)
             mem_write = 1;
-            alu_control = 4'b0000; // ADD for address calculation
+            alu_sel = 4'b0000; // ADD for address calculation
         end
         7'b1100011: begin // Branch (e.g., BEQ)
             branch = 1;
-            alu_control = 4'b0001; // SUB for comparison
+            alu_sel = 4'b0001; // SUB for comparison
         end           
     endcase
 end

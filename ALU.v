@@ -2,14 +2,15 @@
 `timescale 1ns / 1ps
 
 module alu(
-    input [31:0] A , B, //input
-    input [3:0] S, //select
-    output reg [31:0] F, //output
-    output reg zeroflag
+    input [31:0] A, 
+    input [31:0] B,         // inputs
+    input [3:0] S,             // select
+    output reg [31:0] F,       // output
+    output reg zeroflag        // flag
 );
 
-
 always @(*) begin
+    $display("ALU A=%h, B=%h, F=%h, ALU_SEL=%b", A, B, F, S);
     case(S)
         4'b0000: F = A + B;  // ADD
         4'b0001: F = A - B;  // SUB
@@ -22,7 +23,6 @@ always @(*) begin
         4'b1000: F = (A < B) ? 1 : 0; // SLT (Set Less Than) logial
         default: F = 32'b0;  // Default case
     endcase
-
     zeroflag = (F == 32'b0);
 end
 

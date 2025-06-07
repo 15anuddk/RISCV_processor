@@ -71,16 +71,16 @@ register_file reg_file_inst(
 wire [31:0] alu_result;
 wire alu_zero;
 //from control unit we get alu_sel values, thus first continuing with ALU
-ALU alu_inst(
+alu alu_inst(
     .A(rs1_data),
     .B(alu_src ? {{20{instruction[31]}}, instruction[31:20]} : rs2_data),
     .F(alu_result),
-    .zeroflag(alu_zero)
+    .zeroflag(alu_zero),
+    .S(alu_sel)
 );
 
 //memory for load and store
 wire [31:0] read_memdata;
-wire [31:0] write_memdata;
 wire [31:0] mem_addr;
 
 data_mem data_mem_inst(
@@ -88,12 +88,11 @@ data_mem data_mem_inst(
     .address(mem_addr),
     .mem_read(mem_read),
     .mem_write(mem_write),
-    .write_data(write_memdata),
+    .write_data(rs2_data),
     .read_data(read_memdata)
 );
 
-assign PC_next = (branch && alu_zero) ? 
-               (pc_out + {{19{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0}) 
-               : (pc_out + 4);
+assign write_data = mem_to_reg ? read_memdata : alu_result;
 
+assign PC_next = (branch && alu_zero) ? (PC + {{19{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0}): PC + 4;
 endmodule

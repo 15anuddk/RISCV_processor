@@ -1,10 +1,10 @@
 module instruction_decoder(
     input [31:0] instruction, //32 bit instruction
-    output reg [6:0]opcode, //7bit opcode
-    output reg [4:0] rs1, rs2, // source register
-    output reg [2:0] func3,
-    output reg[6:0] func7,
-    output reg[4:0] rd //destination register
+    output [6:0]opcode, //7bit opcode
+    output [4:0] rs1, rs2, // source register
+    output  [2:0] func3,
+    output [6:0] func7,
+    output [4:0] rd //destination register
 );
 
 assign opcode = instruction[6:0];
