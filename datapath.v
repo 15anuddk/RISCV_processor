@@ -78,5 +78,22 @@ ALU alu_inst(
     .zeroflag(alu_zero)
 );
 
-//
+//memory for load and store
+wire [31:0] read_memdata;
+wire [31:0] write_memdata;
+wire [31:0] mem_addr;
 
+data_mem data_mem_inst(
+    .clk(clk),
+    .address(mem_addr),
+    .mem_read(mem_read),
+    .mem_write(mem_write),
+    .write_data(write_memdata),
+    .read_data(read_memdata)
+);
+
+assign PC_next = (branch && alu_zero) ? 
+               (pc_out + {{19{instruction[31]}}, instruction[31], instruction[7], instruction[30:25], instruction[11:8], 1'b0}) 
+               : (pc_out + 4);
+
+endmodule
