@@ -2,9 +2,6 @@ module id_stage(
     input clk,
     input reset,
     input [31:0] instruction,
-    input [31:0] write_data,
-
-
     output [31:0] rs1_data,
     output [31:0] rs2_data,
     output reg [3:0] alu_sel,

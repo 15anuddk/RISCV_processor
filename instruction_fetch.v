@@ -6,6 +6,7 @@ module if_stage(
 );
 
 wire [31:0]PC_next;
+assign PC_next = PC + 4;
 ProgramCounter pc_f(
     .clk(clk),
     .reset(reset),
