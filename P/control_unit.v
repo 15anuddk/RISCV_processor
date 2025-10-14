@@ -47,7 +47,9 @@ always @(*) begin
             alu_op = 2'b00;
             mem_write_en = 1'b1;
             alu_src = 1'b1;
+            alu_op = 2'b00;
         end
+
 
     endcase
 end
