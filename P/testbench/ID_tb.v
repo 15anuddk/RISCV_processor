@@ -1,34 +1,9 @@
-module riscv(
-    input clk,
-    input reset
-);
+module ID_tb();
 
-wire [31:0] PC_in, PC_next_in;
-PC program_counter(.clk(clk),
-                    .reset(reset),
-                    .PC_next(PC_next_in),
-                    .PC(PC_in));
-
-wire [31:0] PC_new;
-adder PC_add(.PC(PC_in),
-            .PC_new(PC_new));
-
-
-wire [31:0] instruction;
-instruction_mem i_m(.address(PC_in),
-                    .instruction(instruction));
-
-wire[31:0]instr, PC_n, PC_in1;
-
-IF_ID IF(.clk(clk),
-        .reset(reset),
-        .PC_new(PC_new),
-        .instruction(instruction),
-        .instr(instr),
-        .PC_n(PC_n),
-        .PC_in(PC_in),
-        .PC_in1(PC_in1));
-
+reg clk;
+reg reset;
+reg [31:0] PC_n;
+reg [31:0] instr;
 
 wire [6:0] funct7, opcode;
 wire [4:0] rs1,rs2,rd;
@@ -91,10 +66,9 @@ wire branch_n;
 wire [31:0] A;
 wire [31:0] B;
 wire [3:0] alu_select;
-wire [31:0] PC_n2;
-wire[31:0] PC_in2, rs2data;
+wire [31:0] PC_new;
 
-ID_EX ID(.clk(clk),
+ID_EX uut(.clk(clk),
           .reset(reset),
           .mem_read_en(mem_read),
           .mem_write_en(mem_write),
@@ -113,12 +87,47 @@ ID_EX ID(.clk(clk),
           .A(A),
           .B(B),
           .alu_select(alu_select),
-          .PC_n2(PC_n2)
-          .PC_in(PC_in1),
-          .PC_in2(PC_in2),
-          .rs2_data(rs2_data),
-          .rs2data(rs2data));
+          .PC_new(PC_new));
 
 
-                
+always #10 clk = ~clk;
 
+initial begin
+  $dumpfile("ID_EX_test.vcd");
+  $dumpvars(0, ID_tb);
+  $monitor("mem_read = %b , mem_read_n = %b ||", mem_read, mem_read_n,
+            "mem_write = %b  gtkwave, mem_write_n = %b", mem_write, mem_write_n,
+            "mem_to_reg = %b , mem_to_reg_n = %b", mem_to_reg , mem_to_reg_n,
+            "jumpl = %b , jumpl_en = %b ", jumpl, jumpl_n,
+            "branch = %b , branch_n = %b", branch, branch_n,
+            "A_in = %h , A = %h reg_write =%b", A_in, A, reg_write,
+            "B_in = %h , B = %h alusrc = %b regwrite = %b", B_in, B, alu_src, reg_write,
+            "alu_sel = %b",alu_sel,"                              ");
+end
+
+initial begin
+  clk = 0;
+  reset = 1;
+  instr = 32'h00012083; // mem_read_n
+  #20reset = 0;
+
+  #20instr = 32'h00322023; //memwrite
+
+  #20 instr = 32'h00832283; // mem_to_reg_n
+
+  #20instr = 32'h008000ef; //jumpl_n
+
+  #20 instr = 32'h00208663; //branch
+
+  #20 instr = 32'h005201b3; // A
+
+  #20 instr = 32'h00a38313; //B addi
+
+  #20 instr = 32'h00a4c433; //xor sel
+  PC_n = 32'h12;
+  #20
+  #10
+  $finish;
+end
+
+endmodule

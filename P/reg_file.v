@@ -1,5 +1,4 @@
 module reg_file(
-    input clk,
     input reset,
     input [4:0]rs1,
     input [4:0]rs2,
@@ -15,7 +14,7 @@ integer i;
 
 assign rs1_data = registers[rs1];
 assign rs2_data = registers[rs2];
-always @(posedge clk) begin
+always @(*) begin
     if(reset) begin
         for(i=0;i<32;i = i+1) begin
             registers[i] <= 32'b0;

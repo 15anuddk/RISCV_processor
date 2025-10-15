@@ -1,12 +1,12 @@
 module alu_ctrl(
     input [2:0] func3,
     input [6:0] func7,
-    input [1:0] alu_op,
-    output reg[3:0] alu_sel
+    input alu_op,
+    output reg[3:0] sel
 );
 
 always @(*) begin
-    if(alu_op == 2'b10) begin
+    if(alu_op == 1'b1) begin
         case(func3)
             3'b000: begin
                 if(func7 == 7'b000) sel = 4'b0000;
@@ -43,7 +43,8 @@ always @(*) begin
             default: sel = 4'b0000;
         endcase
     end
-    else if(alu_op == 2'b01) begin
+    else begin
         sel = 4'b0000;
     end
+end
 endmodule
