@@ -35,16 +35,16 @@ IF_ID uut(.clk(clk),
 
 always #10 clk = ~clk;
 
-// initial begin
-//   $dumpfile("IF_test.vcd");
-//   $dumpvars(0,IF_tb);
-//   $monitor("PC_in = %b  instruction = %b , PC_n = %b", PC_in , instr , PC_n);
-// end
-
-always @(posedge clk) begin
-    $display("time=%0t | PC_in=%h | instruction=%h | PC_n=%h | instr=%h",
-             $time, PC_in, instruction, PC_n, instr);
+initial begin
+  $dumpfile("IF_test.vcd");
+  $dumpvars(0,IF_tb);
+  $monitor("PC_in = %b  instruction = %b , PC_n = %b", PC_in , instr , PC_n);
 end
+
+// always @(posedge clk) begin
+//     $display("time=%0t | PC_in=%h | instruction=%h | PC_n=%h | instr=%h",
+//              $time, PC_in, instruction, PC_n, instr);
+// end
 
 initial begin
   clk = 0;

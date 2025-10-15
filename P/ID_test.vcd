@@ -1,0 +1,150 @@
+$date
+	Wed Oct 15 10:57:49 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module ID_tb $end
+$var wire 5 ! rs2_n [4:0] $end
+$var wire 5 " rs2 [4:0] $end
+$var wire 5 # rs1_n [4:0] $end
+$var wire 5 $ rs1 [4:0] $end
+$var wire 5 % rd_n [4:0] $end
+$var wire 5 & rd [4:0] $end
+$var wire 7 ' opcode_n [6:0] $end
+$var wire 7 ( opcode [6:0] $end
+$var wire 7 ) funct7_n [6:0] $end
+$var wire 7 * funct7 [6:0] $end
+$var wire 3 + funct3_n [2:0] $end
+$var wire 3 , funct3 [2:0] $end
+$var wire 32 - PC_new [31:0] $end
+$var reg 32 . PC_n [31:0] $end
+$var reg 1 / clk $end
+$var reg 32 0 instr [31:0] $end
+$var reg 1 1 reset $end
+$scope module uut $end
+$var wire 32 2 instruction [31:0] $end
+$var wire 5 3 rs2 [4:0] $end
+$var wire 5 4 rs1 [4:0] $end
+$var wire 5 5 rd [4:0] $end
+$var wire 7 6 opcode [6:0] $end
+$var wire 7 7 func7 [6:0] $end
+$var wire 3 8 func3 [2:0] $end
+$upscope $end
+$scope module uut2 $end
+$var wire 32 9 PC_n [31:0] $end
+$var wire 1 / clk $end
+$var wire 3 : funct3 [2:0] $end
+$var wire 7 ; funct7 [6:0] $end
+$var wire 7 < opcode [6:0] $end
+$var wire 5 = rd [4:0] $end
+$var wire 1 1 reset $end
+$var wire 5 > rs1 [4:0] $end
+$var wire 5 ? rs2 [4:0] $end
+$var reg 32 @ PC_new [31:0] $end
+$var reg 3 A funct3_n [2:0] $end
+$var reg 7 B funct7_n [6:0] $end
+$var reg 7 C opcode_n [6:0] $end
+$var reg 5 D rd_n [4:0] $end
+$var reg 5 E rs1_n [4:0] $end
+$var reg 5 F rs2_n [4:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx F
+bx E
+bx D
+bx C
+bx B
+bx A
+bx @
+b101 ?
+b0 >
+bz =
+b10011 <
+b0 ;
+b0 :
+b10010 9
+b0 8
+b0 7
+b10011 6
+b10 5
+b0 4
+b101 3
+b10100000000000100010011 2
+11
+b10100000000000100010011 0
+0/
+b10010 .
+bx -
+b0 ,
+bx +
+b0 *
+bx )
+b10011 (
+bx '
+b10 &
+bx %
+b0 $
+bx #
+b101 "
+bx !
+$end
+#10
+b10010 -
+b10010 @
+b10011 '
+b10011 C
+bz %
+bz D
+b0 #
+b0 E
+b101 !
+b101 F
+b0 )
+b0 B
+01
+1/
+#20
+0/
+#30
+b1010 !
+b1010 F
+b1010 "
+b1010 3
+b1010 ?
+b11 &
+b11 5
+1/
+b101000000000000110010011 0
+b101000000000000110010011 2
+#40
+0/
+#50
+b100011 '
+b100011 C
+b0 !
+b0 F
+b0 "
+b0 3
+b0 ?
+b10 ,
+b10 8
+b10 :
+b100 &
+b100 5
+b100011 (
+b100011 6
+b100011 <
+1/
+b10001000100011 0
+b10001000100011 2
+#60
+0/
+#70
+1/
