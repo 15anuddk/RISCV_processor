@@ -29,6 +29,7 @@ always @(posedge clk) begin
   end
   else begin
     funct7_n <= funct7;
+    funct3_n <= funct3;
     rs2_n <= rs2;
     rs1_n <= rs1;
     rd_n <= rd;

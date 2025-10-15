@@ -28,6 +28,7 @@ ID_EX uut2(.clk(clk),
             .funct7(funct7),
             .rs2(rs2),
             .rs1(rs1),
+            .rd(rd),
             .opcode(opcode),
             .PC_n(PC_n),
             .funct7_n(funct7_n),
@@ -44,7 +45,7 @@ always #10 clk = ~clk;
 initial begin
   $dumpfile("ID_test.vcd");
   $dumpvars(0,ID_tb);
-  $monitor("instruction = %b rs1 = %b rs2 = %b rd = %b opcode = %b funct3 = %b funct7 = %b rs1_n = %b , rs2_n = %b , rd_n = %b , opcode_n = %b , funct3_n = %B, funct7_n = %b", instr,rs1,rs2,rd,opcode,funct3,funct7,rs1_n, rs2_n,rd_n,opcode_n,funct3_n,funct7_n);
+  $monitor("instruction = %b rs1 = %h rs2 = %h rd = %h opcode = %h funct3 = %h funct7 = %b rs1_n = %h , rs2_n = %h , rd_n = %h , opcode_n = %h , funct3_n = %h, funct7_n = %b, PC_n = %h PC_new = %h,", instr,rs1,rs2,rd,opcode,funct3,funct7,rs1_n, rs2_n,rd_n,opcode_n,funct3_n,funct7_n, PC_n, PC_new);
 end
 
 initial begin
@@ -52,7 +53,7 @@ initial begin
   reset = 1;
   instr = 32'h00500113;
   PC_n = 32'h12;
-  #10 reset = 0;
+  #20 reset = 0;
 
   #20 instr = 32'h00A00193;
   #20 instr = 32'h00002223;
