@@ -121,6 +121,66 @@ ID_EX ID(.clk(clk),
           .instr(instr),
           .instr_n(instr_n));
 
+wire [31:0] Alu_out;
+wire zerof;
+ALU alu(.sel(alu_select),
+        .A(A),
+        .B(B),
+        .out(Alu_out),
+        .zeroflag(zerof));
 
-                
+wire [31:0] writeback;
 
+mux3 WB(.jumpl_en(jumpl_n),
+        .PC_new(PC_in2),
+        .alu_result(Alu_out),
+        .write_back(writeback));
+
+mux2 pc(.PC(PC_in2),
+        .PC_new(PC_n2),
+        .jumpl_en(jumpl_n),
+        .instruction(instr_n),
+        .branch_en(branch_n),
+        .zeroflag(zerof),
+        .PC_next(PC_next_in));
+
+wire mem_read_n2, mem_to_reg_n2, mem_write_n2;
+wire [31:0] alu_out_n,rs2_data_n;
+
+EX_MEM uut(.clk(clk),
+        .reset(reset),
+        .mem_to_reg(mem_to_reg_n),
+        .mem_read(mem_read_n),
+        .mem_write(mem_write_n),
+        .alu_out(Alu_out),
+        .rs2_data(rs2data),
+        .mem_to_reg_n2(mem_to_reg_n2),
+        .mem_read_n2(mem_read_n2),
+        .mem_write_n2(mem_write_n2),
+        .alu_out_n(alu_out_n),
+        .rs2_data_n(rs2_data_n));
+
+wire [31:0] read_data;
+
+memory mem(
+    .clk(clk),
+    .reset(reset),
+    .address(address),
+    .mem_write_en(mem_write_n2),
+    .mem_read_en(mem_read_n2),
+    .write_data(writedata),
+    .read_data(read_data));
+
+wire mem_to_reg_n3;
+wire [31:0] read_data_n, alu_result_n;
+MEM_WB uut(
+    .clk(clk),
+    .reset(reset),
+    .mem_to_reg_n2(mem_to_reg_n2),
+    .read_data(read_data),
+    .alu_result(address),
+    .mem_to_reg_n3(mem_to_reg_n3),
+    .read_data_n(read_data_n),
+    .alu_result_n(alu_result_n));            
+
+    

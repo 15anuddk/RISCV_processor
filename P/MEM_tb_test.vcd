@@ -1,0 +1,107 @@
+$date
+	Thu Oct 16 14:09:20 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module MEM_tb $end
+$var wire 32 ! read_data_n [31:0] $end
+$var wire 32 " read_data [31:0] $end
+$var wire 1 # mem_to_reg_n3 $end
+$var wire 32 $ alu_result_n [31:0] $end
+$var reg 32 % address [31:0] $end
+$var reg 1 & clk $end
+$var reg 1 ' mem_read_n2 $end
+$var reg 1 ( mem_to_reg_n2 $end
+$var reg 1 ) mem_write_n2 $end
+$var reg 1 * reset $end
+$var reg 32 + writedata [31:0] $end
+$scope module mem $end
+$var wire 32 , address [31:0] $end
+$var wire 1 & clk $end
+$var wire 1 ' mem_read_en $end
+$var wire 1 ) mem_write_en $end
+$var wire 1 * reset $end
+$var wire 32 - write_data [31:0] $end
+$var reg 32 . read_data [31:0] $end
+$upscope $end
+$scope module uut $end
+$var wire 32 / alu_result [31:0] $end
+$var wire 1 & clk $end
+$var wire 1 ( mem_to_reg_n2 $end
+$var wire 32 0 read_data [31:0] $end
+$var wire 1 * reset $end
+$var reg 32 1 alu_result_n [31:0] $end
+$var reg 1 # mem_to_reg_n3 $end
+$var reg 32 2 read_data_n [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx 2
+bx 1
+bx 0
+bx /
+bx .
+bx -
+bx ,
+bx +
+1*
+x)
+x(
+x'
+0&
+bx %
+bx $
+x#
+bx "
+bx !
+$end
+#10
+b0 "
+b0 .
+b0 0
+b0 $
+b0 1
+b0 !
+b0 2
+0#
+1&
+#20
+0&
+0*
+b1010101 +
+b1010101 -
+b10010 %
+b10010 ,
+b10010 /
+1)
+#30
+b10010 $
+b10010 1
+x#
+1&
+#40
+0&
+1*
+#50
+b1010101 "
+b1010101 .
+b1010101 0
+1&
+1'
+0*
+#60
+0&
+#70
+b1010101 !
+b1010101 2
+1&
+#80
+0&
+#90
+1&
