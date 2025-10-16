@@ -1,0 +1,184 @@
+$date
+	Thu Oct 16 10:58:33 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module EX_tb $end
+$var wire 1 ! zerof $end
+$var wire 32 " writeback [31:0] $end
+$var wire 32 # rs2_data_n [31:0] $end
+$var wire 1 $ mem_write_n2 $end
+$var wire 1 % mem_to_reg_n2 $end
+$var wire 1 & mem_read_n2 $end
+$var wire 32 ' alu_out_n [31:0] $end
+$var wire 32 ( PC_next_in [31:0] $end
+$var wire 32 ) Alu_out [31:0] $end
+$var reg 32 * A [31:0] $end
+$var reg 32 + B [31:0] $end
+$var reg 32 , PC_in2 [31:0] $end
+$var reg 32 - PC_n2 [31:0] $end
+$var reg 4 . alu_select [3:0] $end
+$var reg 1 / branch_n $end
+$var reg 1 0 clk $end
+$var reg 32 1 instr_n [31:0] $end
+$var reg 1 2 jumpl_n $end
+$var reg 1 3 mem_read_n $end
+$var reg 1 4 mem_to_reg_n $end
+$var reg 1 5 mem_write_n $end
+$var reg 1 6 reset $end
+$var reg 32 7 rs2data [31:0] $end
+$scope module WB $end
+$var wire 32 8 PC_new [31:0] $end
+$var wire 1 2 jumpl_en $end
+$var wire 32 9 write_back [31:0] $end
+$var wire 32 : alu_result [31:0] $end
+$upscope $end
+$scope module alu $end
+$var wire 32 ; A [31:0] $end
+$var wire 32 < B [31:0] $end
+$var wire 4 = sel [3:0] $end
+$var reg 32 > out [31:0] $end
+$var reg 1 ! zeroflag $end
+$upscope $end
+$scope module pc $end
+$var wire 32 ? PC [31:0] $end
+$var wire 32 @ PC_new [31:0] $end
+$var wire 1 / branch_en $end
+$var wire 32 A instruction [31:0] $end
+$var wire 1 2 jumpl_en $end
+$var wire 1 ! zeroflag $end
+$var reg 32 B PC_next [31:0] $end
+$upscope $end
+$scope module uut $end
+$var wire 32 C alu_out [31:0] $end
+$var wire 1 0 clk $end
+$var wire 1 3 mem_read $end
+$var wire 1 4 mem_to_reg $end
+$var wire 1 5 mem_write $end
+$var wire 1 6 reset $end
+$var wire 32 D rs2_data [31:0] $end
+$var reg 32 E alu_out_n [31:0] $end
+$var reg 1 & mem_read_n2 $end
+$var reg 1 % mem_to_reg_n2 $end
+$var reg 1 $ mem_write_n2 $end
+$var reg 32 F rs2_data_n [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx F
+bx E
+b10100 D
+b11110 C
+bx B
+b1000001000001010110011 A
+bx @
+bx ?
+b11110 >
+b0 =
+b10100 <
+b1010 ;
+b11110 :
+bx 9
+bx 8
+b10100 7
+16
+05
+04
+03
+x2
+b1000001000001010110011 1
+00
+x/
+b0 .
+bx -
+bx ,
+b10100 +
+b1010 *
+b11110 )
+bx (
+bx '
+x&
+x%
+x$
+bx #
+bx "
+0!
+$end
+#10
+b0 #
+b0 F
+b0 '
+b0 E
+0$
+0&
+0%
+10
+#20
+00
+06
+#30
+b10100 #
+b10100 F
+b11110 '
+b11110 E
+10
+#40
+00
+#50
+b1110000 '
+b1110000 E
+1&
+1%
+b1110000 )
+b1110000 :
+b1110000 >
+b1110000 C
+10
+13
+14
+b1100 +
+b1100 <
+b1100100 *
+b1100100 ;
+b110000110010001100000011 1
+b110000110010001100000011 A
+#60
+00
+#70
+10
+#80
+b11011000 )
+b11011000 :
+b11011000 >
+b11011000 C
+00
+15
+03
+04
+b110111 7
+b110111 D
+b10000 +
+b10000 <
+b11001000 *
+b11001000 ;
+b11100110010001000100011 1
+b11100110010001000100011 A
+#90
+b110111 #
+b110111 F
+b11011000 '
+b11011000 E
+1$
+0&
+0%
+10
+#100
+00
+#110
+10

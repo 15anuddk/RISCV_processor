@@ -92,7 +92,7 @@ wire [31:0] A;
 wire [31:0] B;
 wire [3:0] alu_select;
 wire [31:0] PC_n2;
-wire[31:0] PC_in2, rs2data;
+wire[31:0] PC_in2, rs2data,instr_n;
 
 ID_EX ID(.clk(clk),
           .reset(reset),
@@ -113,11 +113,13 @@ ID_EX ID(.clk(clk),
           .A(A),
           .B(B),
           .alu_select(alu_select),
-          .PC_n2(PC_n2)
+          .PC_n2(PC_n2),
           .PC_in(PC_in1),
           .PC_in2(PC_in2),
           .rs2_data(rs2_data),
-          .rs2data(rs2data));
+          .rs2data(rs2data),
+          .instr(instr),
+          .instr_n(instr_n));
 
 
                 
