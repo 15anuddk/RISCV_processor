@@ -1,3 +1,22 @@
+`include "PC.v"
+`include "adder.v"
+`include "instruction_mem.v"
+`include "IF_ID.v"
+`include "decoder.v"
+`include "control_unit.v"
+`include "alu_ctrl.v"
+`include "reg_file.v"
+`include "imm.v"
+`include "ID_EX.v"
+`include "ALU.v"
+`include "mux3.v"
+`include "mux2.v"
+`include "EX_MEM.v"
+`include "memory.v"
+`include "MEM_WB.v"
+`include "mux1.v"
+`include "instruction.hex"
+
 module riscv(
     input clk,
     input reset
@@ -64,14 +83,14 @@ alu_ctrl a_c(.func3(funct3),
             .alu_op(alu_op),
             .sel(alu_sel));
 
-wire [31:0] write_data;
+wire [31:0] write_data_r;
 wire [31:0] rs1_data , rs2_data;
 reg_file registers(.reset(reset),
                     .rs1(rs1),
                     .rs2(rs2),
                     .rd(rd),
                     .reg_write_en(reg_write),
-                    .write_data(write_data),
+                    .write_data(write_data_r),
                     .rs1_data(rs1_data),
                     .rs2_data(rs2_data));
 
@@ -147,7 +166,7 @@ mux2 pc(.PC(PC_in2),
 wire mem_read_n2, mem_to_reg_n2, mem_write_n2;
 wire [31:0] alu_out_n,rs2_data_n;
 
-EX_MEM uut(.clk(clk),
+EX_MEM EM(.clk(clk),
         .reset(reset),
         .mem_to_reg(mem_to_reg_n),
         .mem_read(mem_read_n),
@@ -165,22 +184,29 @@ wire [31:0] read_data;
 memory mem(
     .clk(clk),
     .reset(reset),
-    .address(address),
+    .address(alu_out_n),
     .mem_write_en(mem_write_n2),
     .mem_read_en(mem_read_n2),
-    .write_data(writedata),
+    .write_data(rs2_data_n),
     .read_data(read_data));
 
 wire mem_to_reg_n3;
 wire [31:0] read_data_n, alu_result_n;
-MEM_WB uut(
+MEM_WB MW(
     .clk(clk),
     .reset(reset),
     .mem_to_reg_n2(mem_to_reg_n2),
     .read_data(read_data),
-    .alu_result(address),
+    .alu_result(alu_out_n),
     .mem_to_reg_n3(mem_to_reg_n3),
     .read_data_n(read_data_n),
     .alu_result_n(alu_result_n));            
 
-    
+mux1 m1(
+    .mem_to_reg_en(mem_to_reg_n3),
+    .read_data(read_data_n),
+    .alu_res(alu_result_n),
+    .write_data(write_data_r)
+);
+
+endmodule
