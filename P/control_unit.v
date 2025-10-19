@@ -12,6 +12,7 @@ module control_unit(
 );
 
 always @(*) begin
+    $display("ID ");
     if(reset) begin
         reg_write_en = 1'b0;
         alu_src = 1'b0;

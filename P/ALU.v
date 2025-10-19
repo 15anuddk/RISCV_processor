@@ -7,7 +7,7 @@ module ALU(
 );
 
 always @(*) begin
-     
+     $display("EX ");
     case(sel)
         4'b0000: out = A + B;
         4'b0001: out = A - B;

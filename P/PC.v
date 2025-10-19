@@ -6,6 +6,7 @@ module PC(
 );
 
 always @(posedge clk) begin
+    $display("IF ");
     if(reset) PC <= 32'b0;
     else PC <= PC_next;
 end

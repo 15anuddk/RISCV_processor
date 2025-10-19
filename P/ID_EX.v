@@ -10,7 +10,6 @@ module ID_EX(
     input [31:0] B_in,
     input [3:0]sel,
     input [31:0] PC_n,
-    input [31:0] PC_in,
     input [31:0] rs2_data,
     input [31:0] instr,
     output reg mem_read_n,
@@ -22,7 +21,6 @@ module ID_EX(
     output reg [31:0] B,
     output reg [3:0] alu_select,
     output reg[31:0] PC_n2,
-    output reg[31:0] PC_in2,
     output reg [31:0] rs2data,
     output reg [31:0] instr_n
 );
@@ -39,7 +37,6 @@ always @(posedge clk) begin
     B <= 32'b0;
     alu_select <= 4'b0;
     PC_n2 <= 32'b0;
-    PC_in2 <= 32'b0;
     instr_n <= 32'b0;
   end
   else begin
@@ -52,7 +49,6 @@ always @(posedge clk) begin
     B <= B_in;
     alu_select <= sel;
     PC_n2 <= PC_n;
-    PC_in2 <= PC_in;
     rs2data <= rs2_data;
     instr_n <= instr;
   end

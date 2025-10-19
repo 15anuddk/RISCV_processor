@@ -15,38 +15,45 @@
 `include "memory.v"
 `include "MEM_WB.v"
 `include "mux1.v"
-`include "instruction.hex"
 
 module riscv(
     input clk,
     input reset
 );
 
-wire [31:0] PC_in, PC_next_in;
+wire [31:0] PC, PC_next;
 PC program_counter(.clk(clk),
                     .reset(reset),
-                    .PC_next(PC_next_in),
-                    .PC(PC_in));
+                    .PC_next(PC_next),
+                    .PC(PC));
 
 wire [31:0] PC_new;
-adder PC_add(.PC(PC_in),
+adder PC_add(.PC(PC),
             .PC_new(PC_new));
 
 
 wire [31:0] instruction;
-instruction_mem i_m(.address(PC_in),
+instruction_mem i_m(.address(PC),
                     .instruction(instruction));
+wire jumpl_n;
+wire branch_n;
+wire zerof;
+mux2 pc(.PC(PC),
+        .PC_new(PC_new),
+        .jumpl_en(jumpl_n),
+        .instruction(instruction),
+        .branch_en(branch_n),
+        .zeroflag(zerof),
+        .PC_next(PC_next));
 
-wire[31:0]instr, PC_n, PC_in1;
+wire[31:0]instr, PC_n;
 
 IF_ID IF(.clk(clk),
         .reset(reset),
         .PC_new(PC_new),
         .instruction(instruction),
         .instr(instr),
-        .PC_n(PC_n),
-        .PC_in(PC_in),
-        .PC_in1(PC_in1));
+        .PC_n(PC_n));
 
 
 wire [6:0] funct7, opcode;
@@ -84,18 +91,17 @@ alu_ctrl a_c(.func3(funct3),
             .sel(alu_sel));
 
 wire [31:0] write_data_r;
-wire [31:0] rs1_data , rs2_data;
+wire [31:0] rs2_data;
+wire [31:0] A_in, B_in;
 reg_file registers(.reset(reset),
                     .rs1(rs1),
                     .rs2(rs2),
                     .rd(rd),
                     .reg_write_en(reg_write),
                     .write_data(write_data_r),
-                    .rs1_data(rs1_data),
+                    .rs1_data(A_in),
                     .rs2_data(rs2_data));
 
-wire [31:0] A_in, B_in;
-assign A_in = rs1_data;
 imm imm_values(.alu_src(alu_src),
                 .mem_write_en(mem_write),
                 .instruction(instr),
@@ -105,13 +111,13 @@ imm imm_values(.alu_src(alu_src),
 wire mem_read_n;
 wire mem_write_n;
 wire mem_to_reg_n;
-wire jumpl_n;
-wire branch_n;
+
+
 wire [31:0] A;
 wire [31:0] B;
 wire [3:0] alu_select;
 wire [31:0] PC_n2;
-wire[31:0] PC_in2, rs2data,instr_n;
+wire[31:0] data,instr_n,rs2data;
 
 ID_EX ID(.clk(clk),
           .reset(reset),
@@ -133,15 +139,14 @@ ID_EX ID(.clk(clk),
           .B(B),
           .alu_select(alu_select),
           .PC_n2(PC_n2),
-          .PC_in(PC_in1),
-          .PC_in2(PC_in2),
           .rs2_data(rs2_data),
           .rs2data(rs2data),
           .instr(instr),
           .instr_n(instr_n));
 
+
 wire [31:0] Alu_out;
-wire zerof;
+
 ALU alu(.sel(alu_select),
         .A(A),
         .B(B),
@@ -151,17 +156,11 @@ ALU alu(.sel(alu_select),
 wire [31:0] writeback;
 
 mux3 WB(.jumpl_en(jumpl_n),
-        .PC_new(PC_in2),
+        .PC_new(PC_n2),
         .alu_result(Alu_out),
         .write_back(writeback));
 
-mux2 pc(.PC(PC_in2),
-        .PC_new(PC_n2),
-        .jumpl_en(jumpl_n),
-        .instruction(instr_n),
-        .branch_en(branch_n),
-        .zeroflag(zerof),
-        .PC_next(PC_next_in));
+
 
 wire mem_read_n2, mem_to_reg_n2, mem_write_n2;
 wire [31:0] alu_out_n,rs2_data_n;
@@ -200,7 +199,9 @@ MEM_WB MW(
     .alu_result(alu_out_n),
     .mem_to_reg_n3(mem_to_reg_n3),
     .read_data_n(read_data_n),
-    .alu_result_n(alu_result_n));            
+    .alu_result_n(alu_result_n));   
+
+       
 
 mux1 m1(
     .mem_to_reg_en(mem_to_reg_n3),

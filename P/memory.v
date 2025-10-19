@@ -10,7 +10,8 @@ module memory(
 
 reg [31:0] data_mem [0:255];
 
-always @(posedge clk) begin
+always @(*) begin
+    $display("MEM ");
     if(reset) read_data <= 32'b0;
     //memory read
     if(mem_read_en && (address >> 2) < 256) begin
