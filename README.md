@@ -5,4 +5,5 @@ https://drive.google.com/file/d/1ti92BrK0rUqScrOI9Sk3zglm2S5OzY3t/view?usp=shari
 
 ### 5 stage pipeline:
 https://drive.google.com/file/d/1lNec-bSS_lOsMyJ-pgPAj2zzsA6KuAK1/view?usp=sharing
-<img width="2733" height="966" alt="pipeline drawio" src="https://github.com/user-attachments/assets/e50d7cb7-88e4-43b4-b172-10d735ea7cbd" />
+<img width="2747" height="1086" alt="pipeline drawio (1)" src="https://github.com/user-attachments/assets/55c1b2d7-d6df-4c7b-96d9-f1528e7559b6" />
+
